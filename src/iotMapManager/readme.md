@@ -56,13 +56,10 @@ Keyboard interaction is enabled by default:
 
 Links and controls in visible popups retain their native keyboard and mouse actions without activating the enclosing marker or cluster. Hidden popups are excluded from keyboard navigation. Mouse selection, cluster hover and cluster expansion remain available.
 
-Markers with a popup and clusters expose `aria-expanded` on their icon container. It follows marker selection and cluster popup visibility (hover, focus and Escape dismissal), including icon regeneration. Markers without a popup do not receive this attribute. Opening a popup does not move focus into its content: use Tab to reach its links and controls.
-
 Include `iot-map-manager.css` for popup visibility and focus styling. These interactions do not make the entire map accessible; applications remain responsible for meaningful content and an accessible alternative representation.
 
 To validate these interactions manually, run `npm run storybook` from the repository root and open a marker story and the **Clusters** story. Use Tab / Shift+Tab to check the focus indicator, Enter / Space to activate markers and clusters, and Escape to dismiss their popups. Check that links in visible popups remain usable, hidden popup content is skipped, and mouse clicks and hover still work.
 Also check the + / - zoom buttons with Tab, Enter and Space, including Shift activation and the minimum/maximum zoom limits.
-The **AccessibleNames** story includes a marker popup with a link and a cluster popup with an aggregation link. Use it to inspect `aria-expanded`, navigate into the popup and dismiss it with Escape.
 
 ## Accessible names
 
@@ -97,15 +94,6 @@ conf.setConfig({
 
 Labels are set as DOM attributes, not HTML, and are refreshed whenever an icon is regenerated. Markers, clusters and icons keep their focusable button role; paths and areas get `role="img"`. Set the configuration function before adding elements: existing icons are not refreshed.
 
-Use `updateMarker`, `updateCluster` or `updateUserMarker` to change an existing element's `ariaLabel`; changing only this property also redraws the icon. The same behavior applies to `updateAllMarkers` and `updateAllClusters`.
-
-- Omit `ariaLabel` (or pass `undefined`) to keep the current name.
-- Pass `ariaLabel: ''` to remove the name. For manual clusters, this also suppresses the configured `clusterAriaLabel` fallback.
-
-```typescript
-markerManager.updateMarker('sensor-1', { ariaLabel: 'Sensor 1, normal temperature' })
-markerManager.updateMarker('sensor-1', { ariaLabel: '' })
-```
 ## marker definition
 A marker is defined as follows:
 
